@@ -32,3 +32,8 @@ all normal, but push with:
 
 git push -u origin master
 
+# finally got github, cloud9 and my local repositories at the same place.
+
+Had to delete the devel branch from cloud9 then push that to github, then pull that to local.
+
+
