@@ -24,4 +24,11 @@ Django - language   - Python/Django
 Heroku - deploy it  - deploy the app
 
 
+#### Cloud9 to Github development ####
+
+http://lepidllama.net/blog/how-to-push-an-existing-cloud9-project-to-github/
+
+all normal, but push with:
+
+git push -u origin master
 
