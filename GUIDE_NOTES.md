@@ -35,5 +35,10 @@ git push -u origin master
 # finally got github, cloud9 and my local repositories at the same place.
 
 Had to delete the devel branch from cloud9 then push that to github, then pull that to local.
+Sweet, so now I have two develpment environments.
+1. Cloud9
+2. Local
 
+So when I go to another laptop, I can just pull down the repo and setup and environment 
+and then carry on working on my project.
 
