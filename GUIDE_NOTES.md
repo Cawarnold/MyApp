@@ -42,3 +42,4 @@ Sweet, so now I have two develpment environments.
 So when I go to another laptop, I can just pull down the repo and setup and environment 
 and then carry on working on my project.
 
+Now changes from laptop
