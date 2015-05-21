@@ -42,4 +42,19 @@ Sweet, so now I have two develpment environments.
 So when I go to another laptop, I can just pull down the repo and setup and environment 
 and then carry on working on my project.
 
-Now changes from laptop
+GitHub workflow:
+## Update master and devel from github:
+(master) git pull origin master
+(master) git push
+(master) git checkout devel
+(devel) git pull origin devel
+
+## Create or change to your working branch.
+(devel) git checkout -b "branch-name"
+
+make your changes
+git add "file-changed.txt"
+git commit -m "commit message"
+git push origin branch-name
+
+then 
