@@ -29,3 +29,7 @@ Check changes in cloud9
 #############
 
 How does all this work with migrations?
+
+Think I have to make migrations on every computer I am using the db.
+ie. since I hard rest the app on Cloud 9 i think i have to reapply the migration.
+20150708
