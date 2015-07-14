@@ -23,7 +23,6 @@ Cloud9 - write code - IDE
 Django - language   - Python/Django
 Heroku - deploy it  - deploy the app
 
-
 #### Cloud9 to Github development ####
 
 http://lepidllama.net/blog/how-to-push-an-existing-cloud9-project-to-github/
@@ -72,27 +71,64 @@ git push
 
 git push origin master --force
 
-#######################
 
-Make changes in devel
-ad
-commit
-push
-
-##
-
-go to github and see pushed changes.
-go to cloud 9 pull down changes
-
-##
-
-Check changes in cloud9
-
-
-#############
+#### Using 'South' to sync DB ####
 
 How does all this work with migrations?
 
 Think I have to make migrations on every computer I am using the db.
 ie. since I hard rest the app on Cloud 9 i think i have to reapply the migration.
 20150708
+
+###########################################################################################
+###########################################################################################
+###########################################################################################
+
+
+#### Caution: keep python package versions ####
+
+I have updated my local django to 1.8,
+but the cloud9 django is 1.7
+
+### Conda Environments
+## List all environments
+			conda info --envs 
+
+## Create an environment
+			conda create --name Env_Python27_Django17 python=2.7 django=1.7
+
+## Change environments (activate/deactivate)
+	#Linux, OS X: 
+			source activate Env_Python27_Django17
+
+	#Windows: 
+			activate Env_Python27_Django17
+			deactivate Env_Python27_Django17
+			
+## Remove an environment
+			conda remove --name Env_Python27_Django17 --all
+
+
+#### Development Process
+
+Develop using Cloud9 to release master, 
+Github to store code, 
+Local to develop new features.
+
+## Master: Live version running on Cloud9 "anything in the master branch is always deployable"
+			Can only be updated from devel and only after devel is working on cloud9
+
+## Devel: For testing features
+
+## Branch: Feature branch where you can create new stuff.
+				Commit messages are important, especially since Git tracks your changes and 
+				then displays them as commits once they're pushed to the server.
+
+## Pull Requests: You can open a Pull Request at any point during the development process: 
+						when you have little or no code but want to share some screenshots or general ideas, 
+						when you're stuck and need help or advice, 
+						or when you're ready for someone to review your work
+
+## Merging Branch:  If you want to test things before merging in the repository on GitHub, you can perform the merge locally first
+
+
