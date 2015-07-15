@@ -41,6 +41,18 @@ Sweet, so now I have two develpment environments.
 So when I go to another laptop, I can just pull down the repo and setup and environment 
 and then carry on working on my project.
 
+################################
+################################
+
+Github Everyday workflow
+	git fetch (allows you to see new remote branches)
+-Go to branch you want to work on
+	git pull
+
+
+################################
+################################
+
 GitHub workflow:
 ## Update master and devel from github:
 (master) git pull origin master
