@@ -48,6 +48,10 @@ Github Everyday workflow
 	git fetch (allows you to see new remote branches)
 -Go to branch you want to work on
 	git pull
+-Make changes
+	git commit -a -m "message details of changes"
+-push commits to remote
+	git push
 
 
 ################################
