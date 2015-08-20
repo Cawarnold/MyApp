@@ -145,6 +145,8 @@ ie. since I hard rest the app on Cloud 9 i think i have to reapply the migration
 I have updated my local django to 1.8,
 but the cloud9 django is 1.7
 
+May need to clone root env then replace root environment 
+
 ### Conda Environments
 ## List all environments
 			conda info --envs 
@@ -170,6 +172,14 @@ but the cloud9 django is 1.7
 ## Check versions of packages
 			conda list
 
+## Clone root env
+	conda create -n Env_Original_root --clone root
+
+## Replace root env
+	# Create .bashrc file
+		echo -n > ~/.bashrc
+	# Edit file
+		echo "~/anaconda/envs/Env_Python276_Django171/bin" >> .bashrc
 
 #### Development Process ####
 
