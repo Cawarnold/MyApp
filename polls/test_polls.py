@@ -144,32 +144,36 @@ def ok_(self,msg=None):
 def no_test_written(self):
     fail(self,"test not yet written")
     
-'''  
-    def vote(poll_id,up=True):
-        url = '/polls/%i/vote' %poll_id,
-        r = post(url,)
-        return r
+  
+def vote(poll_id,up=True):
+    url = '/polls/%i/vote' %poll_id,
+    r = post(url,)
+    return r
     
-    def get_poll(id):
-        try:
-            return Poll.objects.get(id=id)
-        except Exception,exc:
-            return None
+def get_poll(id):
+    try:
+        return Question.objects.get(id=id)
+    except Exception,exc:
+        return None
 
-'''
+
 
 class Test_index(unittest.TestCase):
     def setUp(self):
         if models_importable:
             self.polls = setup_metal()
-            print("Setup metal success")
+            print("Setup_metal Built")
         else:
             self.polls=None
 
-    def test_index_has_5(self):
-        print('maybe setup_metal has built? YES! it worked!')
+    def test_setup_metal_print_all_polls(self):
+        print(Question.objects.all())
 
 
+    def test_setup_metal_print_poll_2(self):
+        q = get_poll(2)
+        poll_votes = q.choice_set.all()[2].votes
+        print(q,poll_votes)
 '''
 class Test_index(unittest.TestCase):
     def setUp(self):
