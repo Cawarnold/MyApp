@@ -3,7 +3,10 @@
 
 #### http://pystar.github.io/pystar/badges/badge_djangoapp.html
 
-#### pystar tests are completely different from my tests... 
+#### pystar tests are different from my tests... 
+#### use 
+        # python ./manage.py test polls -v 2
+#### to see the success of each test
 
 #!/usr/bin/env python
 
@@ -157,8 +160,9 @@ def get_poll(id):
         return None
 
 
+## Test the setup metal function
 
-class Test_index(unittest.TestCase):
+class Test_setup_metal(unittest.TestCase):
     def setUp(self):
         if models_importable:
             self.polls = setup_metal()
@@ -174,7 +178,10 @@ class Test_index(unittest.TestCase):
         q = get_poll(2)
         poll_votes = q.choice_set.all()[2].votes
         print(q,poll_votes)
-'''
+
+
+## Test the Index page of the polls app
+
 class Test_index(unittest.TestCase):
     def setUp(self):
         if models_importable:
@@ -186,11 +193,12 @@ class Test_index(unittest.TestCase):
         if not models_importable :
             self.assertFalse()
         
-        response = post('/polls/')
+        response = get('/polls/')
+        #print('NOOoooooooooooooW',response.content)
         content = response.content
-        # silly!
+        # silly! -- error was that he used a post instead of a get.
         self.assertTrue(content.count('<li>',5))
-'''
+        print('get works')
 
 
 ###########################################################################################################
