@@ -14,6 +14,9 @@ from polls.models import Question, Choice
 # Testing internal behavior of the code.
 
 class QuestionMethodTests(TestCase):
+    """
+    This section is for testing the actual tables and functions
+    """
 
     def test_was_published_recently_with_future_question(self):
         """
@@ -47,6 +50,9 @@ class QuestionMethodTests(TestCase):
 
 # Test behavior as it would be experienced by a user through a web browser
 
+
+## A function that creates questions ##
+
 def create_question(question_text, days):
     """
     Creates a question with the given `question_text` published the given
@@ -57,6 +63,8 @@ def create_question(question_text, days):
     return Question.objects.create(question_text=question_text,
                                    pub_date=time)
 
+
+## A function that creates choices ##
 
 def create_choice(choice_text, question_id):
     """
@@ -70,6 +78,10 @@ def create_choice(choice_text, question_id):
 
 
 class QuestionViewTests(TestCase):
+    """
+    Tests what is in the section of the site which has /polls/
+    http://localhost:8000/polls/
+    """
     def test_index_view_with_no_questions(self):
         """
         If no questions exist, an appropriate message should be displayed.
@@ -203,6 +215,10 @@ class QuestionViewTests(TestCase):
 
 
 class QuestionIndexDetailTests(TestCase):
+    """
+    Tests what is in the section of the site which has /polls/1/
+    http://localhost:8000/polls/1/
+    """
     def test_detail_view_with_a_future_question(self):
         """
         The detail view of a question with a pub_date in the future should
@@ -228,6 +244,10 @@ class QuestionIndexDetailTests(TestCase):
 
 
 class QuestionIndexResultsTests(TestCase):
+    """
+    Tests what is in the section of the site which has /polls/1/results/
+    http://localhost:8000/polls/1/results/
+    """
     def test_results_view_with_a_future_question(self):
         """
         The results view of a question with a pub_date in the future should
