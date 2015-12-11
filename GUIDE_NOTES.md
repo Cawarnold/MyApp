@@ -181,6 +181,7 @@ May need to clone root env then replace root environment
 	# Edit file
 		echo "~/anaconda/envs/Env_Python276_Django171/bin" >> .bashrc
 
+
 #### Development Process ####
 
 Develop using Cloud9 to release master, 
