@@ -10,34 +10,9 @@ from polls.models import Question, Choice
 
 #### Notes on Tests ####
 
-## 1. Test Django and models
-## 2. Tests from the official guide, plus some extra that I wrote myself (20151211)
-## 3. Tests from the pystar guide. -- These tests can be found in polls/test_polls.py
+## 1. Tests from the official guide, plus some extra that I wrote myself (20151211)
+## 2. Tests from the pystar guide. -- These tests can be found in polls/test_polls.py
 
-
-###########################################################################################################
-###########################################################################################################
-###########################################################################################################
-
-
-######## 1. Test Django and models
-
-#### Test version of django ####
-import django
-if django.VERSION < (1,7):
-    raise Exception("Django version needs update")
-else:
-    print("Django correct version")
-
-#### Test if models exist ####
-
-models_importable = False
-try:
-    from polls.models import  Choice, Question
-    models_importable = True
-    print("Models imported fine")
-except ImportError:
-    pass
 
 
 ###########################################################################################################
@@ -45,7 +20,7 @@ except ImportError:
 ###########################################################################################################
 
 
-######## 2. Tests from official guide
+######## 1. Tests from official guide
 
 ## Any function of a module (def of a class) that begins with test will be picked up in the running of the tests.
 ## The database is reset for each test method.

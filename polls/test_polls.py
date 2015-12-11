@@ -23,7 +23,8 @@ setup_test_environment()
 from django.utils import unittest 
 from django.test.client import Client
 
-import datetime
+from django.utils import timezone
+## import datetime
 import random
 
 
@@ -32,8 +33,184 @@ import random
 ###########################################################################################################
 
 
-######## 3. Tests from pystar guide
+######## 2. Tests from pystar guide
 
+
+## What have i Changed?
+
+    ## Changed model 'Poll' to 'Question'
+    ## Changed field 'choice' to 'choice_text'
+    ## Changed field 'question' to 'question_text'
+    ## Changed 'datetime.datetime.now()'' to 'timezone.now()'
+        ## Included 'from django.utils import timezone'
+        ## and commented out 'import datetime'
+
+
+#### Test version of django ####
+import django
+if django.VERSION < (1,7):
+    raise Exception("Django version needs update")
+else:
+    print("Django correct version")
+
+#### Test if models exist ####
+
+models_importable = False
+try:
+    from polls.models import  Choice, Question
+    models_importable = True
+    print("Models imported fine")
+except ImportError:
+    pass
+
+
+
+
+def setup_metal(seed=2929485983):
+    '''
+    produce a number of heavy metal polls, to populate the db with.
+    
+    Args:
+        seed:  int for random number generator
+    
+    Returns:
+        a list of constucted, *saved* polls.
+    
+    '''
+    opinions = ['HEINOUS!', 'suxxors', 'rulez!', 
+    'AWESOME!', 'righTEOUS', 'HAVE MY BABY!!!!',
+    'BEYOND METAL','SUCKS','RULES', 'TOTALLY RULES']
+
+    band_names = '''
+    Abonos Meshuggah Xasthur Silencer Fintroll Beherit Basilisk Cryptopsy
+    '''.strip().split()
+    ## ['Abonos', 'Meshuggah', 'Xasthur', 'Silencer', 'Fintroll', 'Beherit', 'Basilisk', 'Cryptopsy']
+
+    random.seed(seed)  # so it will always make the same polls
+    def make_metal_poll(bandname,opinions):
+        pub = timezone.now()
+        marks = '?' * random.randint(1,5)
+        question = bandname + marks
+        chosen = random.sample(opinions,5)
+        choices = list()
+        for c in chosen:
+            votes = random.randint(1,1000)
+            choices.append(Choice(choice_text=c,votes=votes))
+        
+        p = Question(question_text=question,pub_date=pub)
+        p.save()
+        p.choice_set=choices
+        return p
+
+    polls = [make_metal_poll(band,opinions) for band in band_names]
+    return polls
+
+
+
+## Tests
+
+'''  -- not mine
+(r'^polls/$', 'polls.views.index'),
+(r'^polls/(\d+)/$', 'polls.views.detail'),
+(r'^polls/(\d+)/results/$', 'polls.views.results'),
+(r'^polls/(\d+)/vote/$', 'polls.views.vote')
+'''
+
+class Text_example(unittest.TestCase):
+    def test_testing_is_sane(self):
+        self.assertEqual(1,1)
+        print("Tested testing unit")
+
+
+## some testing utilities
+def get(url):
+    c = Client()
+    response = c.get(url)
+    return response
+
+def post(url,post_kwargs=None):
+    if post_kwargs is None:  post_kwargs={}
+    c = Client()
+    response = c.post(url,post_kwargs)
+    return response
+
+def fail(self,msg=None):
+    self.assertFalse(True,msg=msg)
+
+def ok_(self,msg=None):
+    self.assertTrue(True,msg=msg)
+
+
+def no_test_written(self):
+    fail(self,"test not yet written")
+    
+'''  
+    def vote(poll_id,up=True):
+        url = '/polls/%i/vote' %poll_id,
+        r = post(url,)
+        return r
+    
+    def get_poll(id):
+        try:
+            return Poll.objects.get(id=id)
+        except Exception,exc:
+            return None
+
+'''
+
+class Test_index(unittest.TestCase):
+    def setUp(self):
+        if models_importable:
+            self.polls = setup_metal()
+            print("Setup metal success")
+        else:
+            self.polls=None
+
+    def test_index_has_5(self):
+        print('maybe setup_metal has built? YES! it worked!')
+
+
+'''
+class Test_index(unittest.TestCase):
+    def setUp(self):
+        if models_importable:
+            self.polls = setup_metal()
+        else:
+            self.polls=None
+
+    def test_index_has_5(self):
+        if not models_importable :
+            self.assertFalse()
+        
+        response = post('/polls/')
+        content = response.content
+        # silly!
+        self.assertTrue(content.count('<li>',5))
+'''
+
+
+###########################################################################################################
+###########################################################################################################
+###########################################################################################################
+
+## Everything below is a direct pull from pystar - 
+## meaning that all the functions are based on models Choice, Poll 
+##          rather than Choice, Question
+
+
+"""
+## check whether the models even exist yet!
+models_importable = False
+try:
+    from polls.models import Choice,Poll
+    models_importable = True
+except ImportError:
+    pass
+"""
+
+
+#### Example based test
+"""
 
 def setup_metal(seed=2929485983):
     '''
@@ -75,56 +252,60 @@ def setup_metal(seed=2929485983):
 
 ## Tests
 
-''' (r'^polls/$', 'polls.views.index'),
- (r'^polls/(\d+)/$', 'polls.views.detail'),
- (r'^polls/(\d+)/results/$', 'polls.views.results'),
- (r'^polls/(\d+)/vote/$', 'polls.views.vote'),'''
+''' 
+(r'^polls/$', 'polls.views.index'),
+(r'^polls/(\d+)/$', 'polls.views.detail'),
+(r'^polls/(\d+)/results/$', 'polls.views.results'),
+(r'^polls/(\d+)/vote/$', 'polls.views.vote')
+ '''
 
 class Text_example(unittest.TestCase):
     def test_testing_is_sane(self):
         self.assertEqual(1,1)
+        print("Tested testing unit")
 
 
-## some testing utilities
-def get(url):
-    c = Client()
-    response = c.get(url)
-    return response
-
-def post(url,post_kwargs=None):
-    if post_kwargs is None:  post_kwargs={}
-    c = Client()
-    response = c.post(url,post_kwargs)
-    return response
-
-def fail(self,msg=None):
-    self.assertFalse(True,msg=msg)
-
-def ok_(self,msg=None):
-    self.assertTrue(True,msg=msg)
-
-
-def no_test_written(self):
-    fail(self,"test not yet written")
-
-
-def vote(poll_id,up=True):
-    url = '/polls/%i/vote' % poll_id,
-    r = post(url,)
-    return r
-
-def get_poll(id):
-    try:
-        return Poll.objects.get(id=id)
-    except Exception,exc:
-        return None
+    ## some testing utilities
+    def get(url):
+        c = Client()
+        response = c.get(url)
+        return response
+    
+    def post(url,post_kwargs=None):
+        if post_kwargs is None:  post_kwargs={}
+        c = Client()
+        response = c.post(url,post_kwargs)
+        return response
+    
+    def fail(self,msg=None):
+        self.assertFalse(True,msg=msg)
+    
+    def ok_(self,msg=None):
+        self.assertTrue(True,msg=msg)
+    
+    
+    def no_test_written(self):
+        fail(self,"test not yet written")
+    
+    
+    def vote(poll_id,up=True):
+        url = '/polls/%i/vote' %poll_id,
+        r = post(url,)
+        return r
+    
+    def get_poll(id):
+        try:
+            return Poll.objects.get(id=id)
+        except Exception,exc:
+            return None
 
 
 class Test_urls(unittest.TestCase):
-
+    
     def test_root_redirects(self):
         response = get('/')
         self.assertEqual(response.status_code, 302)
+    
 
     def test_poll_responds(self):
         response = get('/polls/')
@@ -277,3 +458,6 @@ assert false!
 
 '''
 
+
+
+"""

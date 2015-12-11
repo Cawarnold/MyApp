@@ -74,6 +74,11 @@ git push origin branch-name
 
 then continue development
 
+Design a feature, with criteria for acceptance.
+Test your feature, to see if meets those criteria.
+When it works (or you make good progress), commit your work.
+
+
 ################################
 ################################
 
