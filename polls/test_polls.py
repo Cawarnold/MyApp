@@ -160,7 +160,7 @@ def get_poll(id):
         return None
 
 
-## Test the setup metal function
+## Test the setup metal function ## a couple of my additions
 
 class Test_setup_metal(unittest.TestCase):
     def setUp(self):
@@ -194,11 +194,137 @@ class Test_index(unittest.TestCase):
             self.assertFalse()
         
         response = get('/polls/')
-        #print('NOOoooooooooooooW',response.content)
         content = response.content
         # silly! -- error was that he used a post instead of a get.
         self.assertTrue(content.count('<li>',5))
         print('get works')
+
+
+## Test the detail page of the polls app
+
+class Test_detail(unittest.TestCase):
+    def setUp(self):
+        if models_importable:
+            self.polls = setup_metal()
+        else:
+            self.polls=None
+
+    def test_poll_1_has_right_count_of_choices(self):
+        if not models_importable :
+            self.assertFalse()
+        
+        expecting = len(get_poll(1).choice_set.all())
+        response = get('/polls/1/')
+        content = response.content
+        # silly!
+        self.assertEqual(content.count('radio'), expecting)
+
+## Test the voting page of the polls app
+
+class Test_voting(unittest.TestCase):
+    def setUp(self):
+        if models_importable:
+            self.polls = setup_metal()
+        else:
+            self.polls=None
+
+    def test_vote_up_raises_vote_by_one(self):
+        if not models_importable :
+            self.assertFalse()
+        
+        # CA:how many votes before
+        c = get_poll(1).choice_set.all()[0]
+        before = c.votes
+
+        # simlulate a vote
+        r = response = post('/polls/1/vote/',{'choice':c.id})
+
+        # CA:how many votes after
+        c = get_poll(1).choice_set.all()[0]
+        after = c.votes
+        self.assertEqual(before+1, after)
+
+    def test_after_vote_redirect_to_poll_details(self):
+        ## after voting in a poll, it should redirect to that poll
+        # post=....).redirects to whatever!
+        if not models_importable :
+            self.assertFalse()
+        
+        c = get_poll(1).choice_set.all()[0]
+        r = response = post('/polls/1/vote/',{'choice':c.id})
+        self.assertEqual(response.status_code, 302)
+        # /polls/1/results/
+
+
+
+## there must be a more elegant way
+## to get this from Django!
+def check_attrs(obj,attrs):
+    for attr in attrs:
+        try:
+            getattr(obj,attr)
+        except AttributeError,Exc:
+            return False
+        
+        return True
+
+
+## this isn't a great test, but illustrative.
+## (unit-testy, fragile, not BDD).
+class Test_models(unittest.TestCase):
+    def setUp(self):
+        if models_importable :
+            self.polls = setup_metal()
+        else:
+            self.polls=None
+    
+    def test_poll_has_right_fields(self):
+        if not models_importable:
+            fail(self)
+        
+        Q = Question()
+        #checkattrs(mymodel, 'attributes')
+        assert check_attrs(Q,['choice_set','question_text','pub_date','was_published_today'])
+    
+    def test_choice_has_right_fields(self):
+        if not models_importable:
+            fail(self)
+        
+        C = Choice()
+        assert check_attrs(C,['choice_text','votes'])
+
+
+
+
+## polls need to have pubdate and text
+## choices need text and votes
+
+## also choices need a 'is today' method.
+
+## templates!
+
+'''
+Usually when I go about testing a Django application, there are 3 major parts that I test. 
+
+    Models, Views, and Template Tags. 
+
+Templates are hard to test, and are generally more about aesthetics than code, 
+so I tend not to think about actually testing Templates. 
+This should cover most of the parts of your application that are standard. 
+
+Of course, if your project has utils, forms, feeds, and other things like that, you can and should probably test those as well!
+
+/ lives
+something good at slash!
+
+/other/lives 
+something is good there!
+
+
+try import models...
+except....
+assert false!
+'''
 
 
 ###########################################################################################################
