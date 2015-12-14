@@ -160,7 +160,7 @@ def get_poll(id):
         return None
 
 
-## Test the setup metal function
+## Test the setup metal function ## a couple of my additions
 
 class Test_setup_metal(unittest.TestCase):
     def setUp(self):
@@ -194,11 +194,34 @@ class Test_index(unittest.TestCase):
             self.assertFalse()
         
         response = get('/polls/')
-        #print('NOOoooooooooooooW',response.content)
         content = response.content
         # silly! -- error was that he used a post instead of a get.
         self.assertTrue(content.count('<li>',5))
         print('get works')
+
+
+## Test the detail page of the polls app
+
+class Test_detail(unittest.TestCase):
+    def setUp(self):
+        if models_importable:
+            self.polls = setup_metal()
+        else:
+            self.polls=None
+
+    def test_poll_1_has_right_count_of_choices(self):
+        if not models_importable :
+            self.assertFalse()
+        
+        expecting = len(get_poll(1).choice_set.all())
+        response = get('/polls/1/')
+        content = response.content
+        # silly!
+        self.assertEqual(content.count('radio'), expecting)
+
+
+
+
 
 
 ###########################################################################################################
