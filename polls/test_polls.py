@@ -334,6 +334,8 @@ assert false!
 ###########################################################################################################
 
 
+## Second example dataset to test with -- apparently I would have got more errors?
+
 def setup_metal2(seed=2929485983):
     '''
     produce a number of heavy metal polls, to populate the db with.
@@ -383,8 +385,6 @@ def setup_metal2(seed=2929485983):
 
     polls = [make_metal_poll(band,opinions) for band in band_names]
     return polls
-
-
 
 
 
