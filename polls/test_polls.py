@@ -333,3 +333,81 @@ assert false!
 ###########################################################################################################
 ###########################################################################################################
 
+
+## Second example dataset to test with -- apparently I would have got more errors?
+
+def setup_metal2(seed=2929485983):
+    '''
+    produce a number of heavy metal polls, to populate the db with.
+    
+    Args:
+        seed:  int for random number generator
+    
+    Returns:
+        a list of constucted, *saved* polls.
+    
+    '''
+    opinions = ['HEINOUS!', 'suxxors', 'rulez!', 
+    'AWESOME!', 'righTEOUS', 'HAVE MY BABY!!!!',
+    'BEYOND METAL','SUCKS','RULES', 'TOTALLY RULES']
+
+    band_names = '''
+    Abonos Meshuggah Xasthur Silencer Fintroll Beherit Basilisk Cryptopsy
+    Tvangeste Weakling Anabantha Behemoth Moonsorrow Morgoth Nattefrost
+    Aggaloch Enthroned Korpiklaani Nile Summoning Nocturnia Smothered
+    Scatered Summoning Wyrd Amesoeurs Solstafi Helrunar Vargnatt Agrypnie
+    Wyrd Agrypnie Blodsrit Burzum Chaostar Decadence Bathory Leviathan
+    Hellraiser Mayhem Katharsis Helheim Agalloch Therion Windir Ragnarok
+    Arckanum Durdkh Emperor Sulphur Tsjuder Ulver Marduk Luror Edguy
+    Enslaved Epica Gorgoroth Gothminister Immortal Isengard Kamelot
+    Kataklysm Kreator Maras Megadeath Metallica Moonspell Morgul Morok
+    Morphia Necrophagist Opeth Origin Pantera Pestilence Putrefy Vader
+    Runenblut Possessed Sanatorium Profanum Satyricon Antichrist Sepultura
+    Eluveitie Altare Gallhammer Sirenia Slavland Krada Tribulation Venom
+    ObituarObituarObituarObituarObituarObituarismember Vomitory
+    Suffocation Taake Testament ToDieFor Unleashed'''.strip().split()
+
+    random.seed(seed)  # so it will always make the same polls
+    def make_metal_poll(bandname,opinions):
+        pub = timezone.now()
+        marks = '?' * random.randint(1,5)
+        question = bandname + marks
+        chosen = random.sample(opinions,5)
+        choices = list()
+        for c in chosen:
+            votes = random.randint(1,1000)
+            choices.append(Choice(choice_text=c,votes=votes))
+        
+        p = Question(question_text=question,pub_date=pub)
+        p.save()
+        p.choice_set=choices
+        return p
+
+    polls = [make_metal_poll(band,opinions) for band in band_names]
+    return polls
+
+
+
+
+## Test the setup metal function ## a couple of my additions
+
+class Test_setup_metal2(unittest.TestCase):
+    def setUp(self):
+        if models_importable:
+            self.polls = setup_metal2()
+            print("Setup_metal2 Built")
+        else:
+            self.polls=None
+
+    def test_setup_metal2_assert_firstword_of_firstquestion(self):
+        q1 = Question.objects.get(id=1)
+        word = str(q1).strip().split('?')[0]
+        self.assertTrue(word, "Abonos")
+
+
+    def test_setup_metal2_assert_poll_2_numberofvotes(self):
+        q = get_poll(2)
+        poll_votes = q.choice_set.all()[2].votes
+        self.assertTrue(poll_votes,216)
+
+
