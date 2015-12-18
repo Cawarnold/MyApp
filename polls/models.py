@@ -8,6 +8,7 @@ from django.utils import timezone
 class Question(models.Model):
 	question_text = models.CharField(max_length=200)
 	pub_date = models.DateTimeField('date published', default=timezone.now())
+	end_date = models.DateTimeField(blank=True,null=True)
 	def __unicode__(self):              # __str__ on Python 2
 		return self.question_text
 	def was_published_recently(self):
