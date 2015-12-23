@@ -25,6 +25,9 @@ class IndexView(generic.ListView):
 # template name tells the IndexView to use our existing "polls/index.html" template.
 # Similarily for DetailView. ## Its called "Subclassing generic views"
 
+# context_object_name = 'latest_question_list' is just so that the template index.html can find the latest 5 questions.
+# latest_question_list could be anything.
+
 class DetailView(generic.DetailView):
     model = Question
     template_name = 'polls/detail.html'
