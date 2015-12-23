@@ -220,6 +220,15 @@ class Test_detail(unittest.TestCase):
         content = response.content
         # silly!
         self.assertEqual(content.count('radio'), expecting)
+        
+        ## I put the following in the detail.html template and all the 'radio's came up in my test!
+            #<!--
+            #The above template displays a radio button for each choice.
+            #The value of each radio button is the associated Question Choice's ID.
+            #The name of each radio button is choice.
+            #that means, when somebody selects one of the radio buttons and submits the form,
+            #the form submission will represent the Python dictionary.
+            #-->
 
 ## Test the voting page of the polls app
 
