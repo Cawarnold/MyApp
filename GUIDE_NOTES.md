@@ -78,6 +78,18 @@ Design a feature, with criteria for acceptance.
 Test your feature, to see if meets those criteria.
 When it works (or you make good progress), commit your work.
 
+#### The way Github wants you to do it
+
+Step 1: From your project repository, bring in the changes and test.
+
+git fetch origin
+git checkout -b AddUsersModel origin/AddUsersModel
+git merge devel
+Step 2: Merge the changes and update on GitHub.
+
+git checkout devel
+git merge --no-ff AddUsersModel
+git push origin devel
 
 ################################
 ################################
