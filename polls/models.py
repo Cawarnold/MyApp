@@ -8,7 +8,8 @@ from django.utils import timezone
 class Question(models.Model):
 	question_text = models.CharField(max_length=200)
 	pub_date = models.DateTimeField('date published', default=timezone.now())
-	def __str__(self):              # __unicode__ on Python 2
+	end_date = models.DateTimeField(blank=True,null=True)
+	def __unicode__(self):              # __str__ on Python 2
 		return self.question_text
 	def was_published_recently(self):
 		return timezone.now() - datetime.timedelta(days=1) <= self.pub_date <= timezone.now()
@@ -21,5 +22,5 @@ class Choice(models.Model):
 	choice_text = models.CharField(max_length=200)
 	votes = models.IntegerField(default=0)
 
-	def __str__(self):              # __unicode__ on Python 2
+	def __unicode__(self):              # __str__ on Python 2 --  # Changed these to __unicode on 20151218
 		return self.choice_text

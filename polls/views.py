@@ -3,6 +3,8 @@ from django.shortcuts import get_object_or_404, render
 from django.core.urlresolvers import reverse
 from django.views import generic
 
+from django.template import RequestContext
+from django.shortcuts import get_object_or_404, render_to_response
 from django.utils import timezone
 
 from polls.models import Question, Choice
@@ -25,6 +27,9 @@ class IndexView(generic.ListView):
 # template name tells the IndexView to use our existing "polls/index.html" template.
 # Similarily for DetailView. ## Its called "Subclassing generic views"
 
+# context_object_name = 'latest_question_list' is just so that the template index.html can find the latest 5 questions.
+# latest_question_list could be anything.
+
 class DetailView(generic.DetailView):
     model = Question
     template_name = 'polls/detail.html'
@@ -45,16 +50,37 @@ class ResultsView(generic.DetailView):
         return Question.objects.filter(pub_date__lte=timezone.now())
 
 # http://127.0.0.1:8000/polls/1/vote/
+#def vote(request, question_id):
+#    p = get_object_or_404(Question, pk=question_id)
+#    try:
+#        selected_choice = p.choice_set.get(pk=request.POST['choice'])
+#    except (KeyError, Choice.DoesNotExist):
+#        # Redisplay the question voting form.
+#        return render(request, 'polls/detail.html', {
+#            'question': p,
+#            'error_message': "You didn't select a choice.",
+#        })
+#    else:
+#        selected_choice.votes += 1
+#        selected_choice.save()
+#        # Always return an HttpResponseRedirect after successfully dealing
+#        # with POST data. This prevents data from being posted twice if a
+#        # user hits the Back button.
+#        return HttpResponseRedirect(reverse('polls:results', args=(p.id,)))
+
+
+## The following is the pystar version with --RequestContext-- instead of --render--
+
 def vote(request, question_id):
     p = get_object_or_404(Question, pk=question_id)
     try:
         selected_choice = p.choice_set.get(pk=request.POST['choice'])
     except (KeyError, Choice.DoesNotExist):
         # Redisplay the question voting form.
-        return render(request, 'polls/detail.html', {
+        return render_to_response('polls/detail.html', {
             'question': p,
             'error_message': "You didn't select a choice.",
-        })
+        }, context_instance=RequestContext(request))
     else:
         selected_choice.votes += 1
         selected_choice.save()
@@ -64,3 +90,10 @@ def vote(request, question_id):
         return HttpResponseRedirect(reverse('polls:results', args=(p.id,)))
 
 
+# request.POST is a dictionary-like object that lets you access submitted data by key name. 
+# In this case, request.POST['choice'] returns the ID of the selected choice, as a string.
+# request.POST values are always strings. 
+
+# POP QUIZ: Why is this?
+# Think about the interaction process with websites. You enter text, and it goes off for processing.
+# Strings are the universal currency of computing!

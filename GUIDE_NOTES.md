@@ -196,6 +196,11 @@ Local to develop new features.
 ## Master: Live version running on Cloud9 "anything in the master branch is always deployable"
 			Can only be updated from devel and only after devel is working on cloud9
 			## When you're ready to push a feature to master
+				on C9:
+				git checkout devel
+				git pull
+				-- check app
+				git checkout master
 				git reset --hard origin/devel
 				git push
 
