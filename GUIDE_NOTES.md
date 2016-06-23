@@ -91,6 +91,9 @@ git checkout devel
 git merge --no-ff AddUsersModel
 git push origin devel
 
+	IMAGE: http://www.amygori.com/gdi-rdu-git-github/images/git_index_structure.png
+
+
 ################################
 ################################
 
