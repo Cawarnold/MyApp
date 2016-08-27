@@ -25,6 +25,10 @@ In case you want to run your Django application from the terminal just run:
 2) Run Django
 
     $ python manage.py runserver $IP:$PORT
+
+3) Go to browser
+	
+	http://127.0.0.1:8000/polls/
     
 ## Support & Documentation
 

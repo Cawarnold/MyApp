@@ -173,6 +173,7 @@ May need to clone root env then replace root environment
 
 ## Create an environment
 			conda create --name Env_Python276_Django171 python=2.7.6 django=1.7.1
+			conda create --name Env_Python352 python=3.5.2
 
 ## Change environments (activate/deactivate)
 	#Linux, OS X: 
