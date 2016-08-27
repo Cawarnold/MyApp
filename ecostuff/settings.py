@@ -37,6 +37,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.staticfiles',
     'polls',
+    'home',
 )
 
 MIDDLEWARE_CLASSES = (
