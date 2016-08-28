@@ -84,6 +84,15 @@ changes into master
 ## Delete branch
 Then when you're finished with branch, delete it.
 
+Delete Local branch:
+	git branch -d branchname
+
+Delete Remote branch:
+	git push origin --delete branchname
+
+Delte branches on other machines:
+	git fetch --all --prune branchname
+
 ################################
 ################################
 
