@@ -82,6 +82,39 @@ When it works (or you make good progress), commit your work.
 ################################
 ################################
 
+Github merge / rebase to master
+
+#### To merge development
+	-- means you lose your branch change history
+
+git checkout master
+git pull origin master
+git merge test
+git push origin master
+
+
+#### Rebase -- if you are working with others
+
+Rebase - means that your commits from your branch will 
+		be posted ontop of the changes in master
+
+git checkout master
+git pull
+git checkout test
+git pull
+git rebase -i master
+git checkout master
+git merge test
+
+
+#### Pull Request -- if you are working on somebody else's development
+
+Go to git hub and perform a pull request
+
+
+################################
+################################
+
 
 #### Git Reset to Github Version ####
 
@@ -140,6 +173,37 @@ Think I have to make migrations on every computer I am using the db.
 ie. since I hard rest the app on Cloud 9 i think i have to reapply the migration.
 20150708
 
+#############################
+
+
+#### Development Process for MyApp ####
+
+Develop using Cloud9 to release master, 
+Github to store code, 
+Local to develop new features.
+
+## Master: Live version running on Cloud9 "anything in the master branch is always deployable"
+			Can only be updated from devel and only after devel is working on cloud9
+			## When you're ready to push a feature to master
+				git reset --hard origin/devel
+				git push
+
+## Devel: For testing features
+
+## Branch: Feature branch where you can create new stuff.
+				Commit messages are important, especially since Git tracks your changes and 
+				then displays them as commits once they're pushed to the server.
+
+## Pull Requests: You can open a Pull Request at any point during the development process: 
+						when you have little or no code but want to share some screenshots or general ideas, 
+						when you're stuck and need help or advice, 
+						or when you're ready for someone to review your work
+
+## Merging Branch:  If you want to test things before merging in the repository on GitHub, you can perform the merge locally first
+
+
+
+
 ###########################################################################################
 ###########################################################################################
 ###########################################################################################
@@ -187,30 +251,7 @@ May need to clone root env then replace root environment
 		echo "~/anaconda/envs/Env_Python276_Django171/bin" >> .bashrc
 
 
-#### Development Process ####
 
-Develop using Cloud9 to release master, 
-Github to store code, 
-Local to develop new features.
-
-## Master: Live version running on Cloud9 "anything in the master branch is always deployable"
-			Can only be updated from devel and only after devel is working on cloud9
-			## When you're ready to push a feature to master
-				git reset --hard origin/devel
-				git push
-
-## Devel: For testing features
-
-## Branch: Feature branch where you can create new stuff.
-				Commit messages are important, especially since Git tracks your changes and 
-				then displays them as commits once they're pushed to the server.
-
-## Pull Requests: You can open a Pull Request at any point during the development process: 
-						when you have little or no code but want to share some screenshots or general ideas, 
-						when you're stuck and need help or advice, 
-						or when you're ready for someone to review your work
-
-## Merging Branch:  If you want to test things before merging in the repository on GitHub, you can perform the merge locally first
 
 ###########################################################################################
 ###########################################################################################
