@@ -98,7 +98,7 @@ Delte branches on other machines:
 
 Github merge / rebase to master
 
-#### To merge development
+#### To merge development to master
 	-- means you lose your branch change history
 
 git checkout master
