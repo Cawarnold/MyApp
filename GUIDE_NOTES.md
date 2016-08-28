@@ -41,6 +41,8 @@ Sweet, so now I have two develpment environments.
 So when I go to another laptop, I can just pull down the repo and setup and environment 
 and then carry on working on my project.
 
+---  cloud 9 css lacks api permissions
+
 ################################
 ################################
 
@@ -115,7 +117,7 @@ Rebase - means that your commits from your branch will
 git checkout master
 git pull
 git checkout test
-git pull
+git Pull
 git rebase -i master
 git checkout master
 git merge test
