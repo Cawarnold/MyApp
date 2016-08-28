@@ -78,6 +78,11 @@ Design a feature, with criteria for acceptance.
 Test your feature, to see if meets those criteria.
 When it works (or you make good progress), commit your work.
 
+Then either merge/rebase or pull request to get 
+changes into master
+
+## Delete branch
+Then when you're finished with branch, delete it.
 
 ################################
 ################################
